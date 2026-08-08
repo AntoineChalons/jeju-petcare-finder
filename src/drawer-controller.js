@@ -88,9 +88,17 @@ function parseContacts(packed) {
     const i = entry.indexOf(':');
     if (i === -1) return null;
     const type = entry.slice(0, i).trim();
-    const value = entry.slice(i + 1).trim();
+    let value = entry.slice(i + 1).trim();
+    // Optional '|<int>' suffix = Instagram follower count (issue #6).
+    // '|' never appears in handles, numbers, or the chat URLs we store.
+    let followers = null;
+    const pi = value.lastIndexOf('|');
+    if (pi !== -1 && /^\d+$/.test(value.slice(pi + 1))) {
+      followers = Number(value.slice(pi + 1));
+      value = value.slice(0, pi).trim();
+    }
     if (!type || !value || !CONTACT_META[type]) return null;
-    return { type, value };
+    return { type, value, followers };
   }).filter(Boolean);
 }
 
@@ -99,14 +107,17 @@ function contactsHtml(place) {
   if (!contacts.length) {
     return `<p class="drawer-empty">${esc(t('drawer.noContact'))}</p>`;
   }
-  const items = contacts.map(({ type, value }) => {
+  const items = contacts.map(({ type, value, followers }) => {
     const meta = CONTACT_META[type];
     const label = t('drawer.' + meta.labelKey);
     const href = meta.href(value);
     const shown = type === 'instagram' ? '@' + value.replace(/^@/, '') : value;
-    const inner = href
+    let inner = href
       ? `<a href="${esc(href)}" target="_blank" rel="noopener noreferrer">${esc(shown)}</a>`
       : esc(shown);
+    if (type === 'instagram' && followers != null) {
+      inner += ` <span class="contact-followers">· ${esc(t('drawer.followers', { count: followers.toLocaleString() }))}</span>`;
+    }
     return `<li class="contact-item">
         <span class="contact-icon" aria-hidden="true">${meta.icon}</span>
         <span class="contact-body">

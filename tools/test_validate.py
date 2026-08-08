@@ -137,9 +137,25 @@ class TestContactMethods:
             2, errors,
         )
         assert errors == []
-        assert ("mobile_phone", "+82-10-1234-5678") in result
-        assert ("instagram", "happy_paws") in result  # @ stripped
-        assert ("kakaotalk", "https://pf.kakao.com/_abc123") in result
+        assert ("mobile_phone", "+82-10-1234-5678", None) in result
+        assert ("instagram", "happy_paws", None) in result  # @ stripped
+        assert ("kakaotalk", "https://pf.kakao.com/_abc123", None) in result
+
+    def test_instagram_followers_suffix(self):
+        errors = []
+        result = parse_contact_methods("instagram:happy_paws|1234", 2, errors)
+        assert errors == []
+        assert result == [("instagram", "happy_paws", 1234)]
+
+    def test_followers_suffix_rejected_on_other_types(self):
+        errors = []
+        parse_contact_methods("mobile_phone:+82-10-1234-5678|99", 2, errors)
+        assert any("only allowed on instagram" in err for err in errors)
+
+    def test_non_numeric_followers_rejected(self):
+        errors = []
+        parse_contact_methods("instagram:happy_paws|lots", 2, errors)
+        assert any("non-negative integer" in err for err in errors)
 
     def test_unknown_type_fails(self):
         errors = []

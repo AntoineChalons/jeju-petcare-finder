@@ -63,7 +63,8 @@ CSV_COLUMNS = [
     "price_from_krw",          # representative starting price in KRW
     "price_note",              # what price_from_krw refers to, e.g. "small dog full grooming"
     "languages_spoken",        # comma-joined, e.g. "Korean, English"
-    "contact_methods",         # semicolon-joined "type:value", e.g. "mobile_phone:+82-10-...;instagram:handle"
+    "contact_methods",         # semicolon-joined "type:value", e.g. "mobile_phone:+82-10-...;instagram:handle";
+                               # instagram entries may carry "|<followers>" (issue #6), e.g. "instagram:handle|1234"
 ]
 
 # Column order for data/reviews.csv: one row per review entry.
