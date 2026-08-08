@@ -57,7 +57,7 @@ def export_rows(conn):
             (place_id,),
         ).fetchall()
         contacts = conn.execute(
-            "SELECT contact_type, contact_value FROM contact_methods WHERE place_id = ? ORDER BY contact_id",
+            "SELECT contact_type, contact_value, followers FROM contact_methods WHERE place_id = ? ORDER BY contact_id",
             (place_id,),
         ).fetchall()
 
@@ -77,7 +77,11 @@ def export_rows(conn):
             "price_note": place["price_note"] or "",
             "pet_types": ", ".join(r["pet_type_name"] for r in pet_types),
             "languages_spoken": ", ".join(r["language_name"] for r in languages),
-            "contact_methods": ";".join(f"{r['contact_type']}:{r['contact_value']}" for r in contacts),
+            "contact_methods": ";".join(
+                f"{r['contact_type']}:{r['contact_value']}"
+                + (f"|{r['followers']}" if r["followers"] is not None else "")
+                for r in contacts
+            ),
         }
         for col in SERVICE_COLUMNS:
             row[col] = bool_to_csv(place[col])

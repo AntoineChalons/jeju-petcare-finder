@@ -47,6 +47,9 @@ CREATE TABLE contact_methods (
     place_id INTEGER NOT NULL REFERENCES places(place_id) ON DELETE CASCADE,
     contact_type TEXT CHECK(contact_type IN ('email','mobile_phone','kakaotalk','instagram','naver_talk','whatsapp')) NOT NULL,
     contact_value TEXT NOT NULL,
+    -- Instagram follower count at last check (issue #6); NULL for other
+    -- contact types or when unknown. A point-in-time snapshot, not live.
+    followers INTEGER,
     UNIQUE(place_id, contact_type, contact_value)
 );
 
@@ -144,7 +147,8 @@ SELECT
     -- entries, colon between fields. Packing them into the existing view
     -- keeps the frontend on a single query instead of issuing a follow-up
     -- lookup per selected place.
-    (SELECT GROUP_CONCAT(cm.contact_type || ':' || cm.contact_value, ';')
+    (SELECT GROUP_CONCAT(cm.contact_type || ':' || cm.contact_value ||
+            CASE WHEN cm.followers IS NOT NULL THEN '|' || cm.followers ELSE '' END, ';')
        FROM contact_methods cm WHERE cm.place_id=p.place_id) AS contact_methods
 FROM places p;
 """

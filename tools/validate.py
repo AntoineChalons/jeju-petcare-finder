@@ -69,7 +69,13 @@ def _parse_float(raw, row_num, column, errors):
 
 
 def parse_contact_methods(raw, row_num, errors):
-    """'email:a@b.com;mobile_phone:+82-10-1234-5678' -> [(type, value), ...]"""
+    """'email:a@b.com;instagram:handle|1234' -> [(type, value, followers), ...]
+
+    The optional '|<int>' suffix carries a follower count (issue #6) and is
+    only meaningful for instagram entries; followers is None when absent.
+    '|' cannot appear in handles, phone numbers, or the chat URLs we store,
+    so splitting on the last '|' is unambiguous.
+    """
     result = []
     if not raw or not raw.strip():
         return result
@@ -86,6 +92,22 @@ def parse_contact_methods(raw, row_num, errors):
         if ctype not in CONTACT_TYPES:
             errors.append(f"row {row_num}: contact_methods type '{ctype}' not in {sorted(CONTACT_TYPES)}")
             continue
+        followers = None
+        if "|" in value:
+            value, _, raw_followers = value.rpartition("|")
+            value = value.strip()
+            raw_followers = raw_followers.strip()
+            if ctype != "instagram":
+                errors.append(
+                    f"row {row_num}: contact_methods followers suffix '|{raw_followers}' is only allowed on instagram entries"
+                )
+                continue
+            if not raw_followers.isdigit():
+                errors.append(
+                    f"row {row_num}: contact_methods followers '{raw_followers}' must be a non-negative integer"
+                )
+                continue
+            followers = int(raw_followers)
         if not value:
             errors.append(f"row {row_num}: contact_methods entry '{entry}' is missing a value")
             continue
@@ -97,7 +119,7 @@ def parse_contact_methods(raw, row_num, errors):
                     f"row {row_num}: contact_methods instagram value '{value}' must be a bare handle, not a URL"
                 )
                 continue
-        result.append((ctype, value))
+        result.append((ctype, value, followers))
     return result
 
 

@@ -84,10 +84,10 @@ def import_rows(conn, rows):
                 (place_id, pt_id),
             )
 
-        for ctype, value in row["contact_methods"]:
+        for ctype, value, followers in row["contact_methods"]:
             conn.execute(
-                "INSERT OR IGNORE INTO contact_methods (place_id, contact_type, contact_value) VALUES (?, ?, ?)",
-                (place_id, ctype, value),
+                "INSERT OR IGNORE INTO contact_methods (place_id, contact_type, contact_value, followers) VALUES (?, ?, ?, ?)",
+                (place_id, ctype, value, followers),
             )
 
 
