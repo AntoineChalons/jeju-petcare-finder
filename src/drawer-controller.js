@@ -1,6 +1,7 @@
 import { t } from './i18n/i18n.js';
 import { isStale } from './reviews.js';
 import { SERVICE_FILTERS } from './filters.js';
+import { displayName } from './place-name.js';
 
 /**
  * Place detail drawer.
@@ -310,7 +311,7 @@ export function renderDrawer(place) {
   const wasOpen = !rootEl.hidden;
   if (!wasOpen) lastFocusedEl = document.activeElement;
 
-  rootEl.querySelector('#drawer-title').textContent = place.name;
+  rootEl.querySelector('#drawer-title').textContent = displayName(place);
   rootEl.querySelector('#drawer-close').setAttribute('aria-label', t('drawer.close'));
   rootEl.querySelector('#drawer-body').innerHTML = bodyHtml(place);
 

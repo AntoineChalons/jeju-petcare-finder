@@ -49,6 +49,7 @@ SERVICE_COLUMNS = [
 CSV_COLUMNS = [
     "place_id",
     "name",
+    "name_roman",           # Romanized Korean name (Revised Romanization), shown when UI language is English (issue #5)
     "city",
     "full_address",
     "gps_lat",

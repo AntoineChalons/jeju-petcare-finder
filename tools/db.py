@@ -10,6 +10,9 @@ SCHEMA_SQL = """
 CREATE TABLE places (
     place_id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
+    -- Romanized Korean name (Revised Romanization). The frontend shows this
+    -- instead of `name` when the UI language is English (issue #5).
+    name_roman TEXT,
     city TEXT NOT NULL,
     full_address TEXT,
     gps_lat REAL,
@@ -113,6 +116,7 @@ CREATE VIEW v_place_dashboard AS
 SELECT
     p.place_id,
     p.name,
+    p.name_roman,
     p.city,
     p.full_address,
     p.gps_lat,

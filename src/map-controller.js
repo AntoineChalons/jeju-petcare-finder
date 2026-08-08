@@ -1,5 +1,6 @@
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import { displayName } from './place-name.js';
 
 // MapLibre GL JS + OpenFreeMap positron style — same map as the sibling
 // projects jeju-scuba-finder and jeju-beach-finder. Free tiles, no API key
@@ -74,8 +75,8 @@ function esc(v) {
 function popupHtml(p) {
   const titleHref = p.naver_map_url || p.website_url || null;
   const titleHtml = titleHref
-    ? `<a class="popup-title popup-title-link" href="${esc(titleHref)}" target="_blank" rel="noopener noreferrer">${esc(p.name)}</a>`
-    : `<div class="popup-title">${esc(p.name)}</div>`;
+    ? `<a class="popup-title popup-title-link" href="${esc(titleHref)}" target="_blank" rel="noopener noreferrer">${esc(displayName(p))}</a>`
+    : `<div class="popup-title">${esc(displayName(p))}</div>`;
   return `
     ${titleHtml}
     <div class="popup-row">${esc(p.city)}</div>

@@ -1,9 +1,14 @@
 import { t } from './i18n/i18n.js';
 import { SERVICE_FILTERS } from './filters.js';
+import { displayName } from './place-name.js';
 
 export function sortPlaces(places, sortKey, sortAsc) {
   return [...places].sort((a, b) => {
-    let av = a[sortKey], bv = b[sortKey];
+    // Sort the name column by the *displayed* name so the alphabetical
+    // order matches what the user sees in the current UI language
+    // (romanized names under English, Korean otherwise — issue #5).
+    let av = sortKey === 'name' ? displayName(a) : a[sortKey];
+    let bv = sortKey === 'name' ? displayName(b) : b[sortKey];
     if (av == null) av = typeof bv === 'number' ? -Infinity : '';
     if (bv == null) bv = typeof av === 'number' ? -Infinity : '';
     if (typeof av === 'string') av = av.toLowerCase();
@@ -47,7 +52,7 @@ export function renderTable(sortedPlaces, selectedPlaceId, onRowClick) {
     const tr = document.createElement('tr');
     if (p.place_id === selectedPlaceId) tr.classList.add('selected-row');
     tr.innerHTML = `
-      <td class="cell-name">${p.name}</td>
+      <td class="cell-name">${displayName(p)}</td>
       <td>${p.city || empty}</td>
       <td class="cell-services">${serviceBadges(p)}</td>
       <td>${ratingCell(p)}</td>

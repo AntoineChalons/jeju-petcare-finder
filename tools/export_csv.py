@@ -64,6 +64,7 @@ def export_rows(conn):
         row = {
             "place_id": place_id,
             "name": place["name"],
+            "name_roman": place["name_roman"],
             "city": place["city"],
             "full_address": place["full_address"] or "",
             "gps_lat": num_to_csv(place["gps_lat"]),

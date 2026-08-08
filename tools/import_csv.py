@@ -45,15 +45,16 @@ def import_rows(conn, rows):
         cur = conn.execute(
             f"""
             INSERT INTO places (
-                place_id, name, city, full_address, gps_lat, gps_lng,
+                place_id, name, name_roman, city, full_address, gps_lat, gps_lng,
                 website_url, naver_map_url, booking_url, active,
                 {', '.join(SERVICE_COLUMNS)},
                 price_from_krw, price_note
-            ) VALUES ({', '.join(['?'] * (12 + len(SERVICE_COLUMNS)))})
+            ) VALUES ({', '.join(['?'] * (13 + len(SERVICE_COLUMNS)))})
             """,
             (
                 row["place_id"],
                 row["name"],
+                row["name_roman"],
                 row["city"],
                 row["full_address"],
                 row["gps_lat"],
