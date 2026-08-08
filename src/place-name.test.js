@@ -1,6 +1,6 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { displayName } from './place-name.js';
-import { setLocale, getLocale } from './i18n/i18n.js';
+import { setLocale } from './i18n/i18n.js';
 import { DEFAULT_LOCALE } from './i18n/translations.js';
 
 const PLACE = { name: '가람동물병원', name_roman: 'Garam Dongmul Byeongwon' };
