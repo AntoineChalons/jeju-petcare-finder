@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!--
+    Favicon (issue #16): black-on-white scuba diver pictogram,
+    inspired by https://www.freeiconspng.com/img/10952.
+    White background, solid-black silhouette shapes, no strokes.
+    Redrawn from scratch as SVG (no third-party image bundled).
+  -->
+  <rect width="512" height="512" fill="#ffffff"/>
+
+  <!-- Water surface: filled wave ribbon. -->
+  <path fill="#000000" d="
+    M 24 150
+    C 96 108, 168 192, 240 150
+    C 312 108, 384 192, 488 150
+    L 488 178
+    C 384 220, 312 136, 240 178
+    C 168 220, 96 136, 24 178
+    Z"/>
+
+  <!-- Air bubbles trailing up from the diver's regulator. -->
+  <circle cx="420" cy="252" r="10" fill="#000000"/>
+  <circle cx="446" cy="228" r="7"  fill="#000000"/>
+  <circle cx="462" cy="254" r="5"  fill="#000000"/>
+
+  <!--
+    Diver in profile, gliding left with head at the front-left, fins
+    trailing at the back-right. Composed of independent black shapes
+    that together read as head + body + tank + legs + fins.
+  -->
+
+  <!-- Head + mask -->
+  <circle cx="140" cy="320" r="42" fill="#000000"/>
+  <!-- Mask window: small white lens on the front (left) side of the head -->
+  <ellipse cx="118" cy="316" rx="14" ry="10" fill="#ffffff"/>
+
+  <!-- Body/torso: a thick horizontal capsule behind the head -->
+  <rect x="170" y="292" width="180" height="70" rx="35" fill="#000000"/>
+
+  <!-- Tank strapped on the diver's back (sits above the body capsule) -->
+  <rect x="222" y="254" width="42" height="52" rx="10" fill="#000000"/>
+  <!-- Regulator hose curving up from the tank towards the bubbles.
+       Drawn as a filled ribbon (not a stroke) so every renderer, not
+       just browsers, shows it. -->
+  <path fill="#000000" d="
+    M 258 258
+    C 300 234, 362 230, 408 246
+    L 405 258
+    C 360 244, 300 248, 262 270
+    Z"/>
+
+  <!-- Upper leg: rectangle continuing the body backwards -->
+  <rect x="340" y="304" width="90" height="46" rx="18" fill="#000000"/>
+
+  <!-- Fins: two swept, angular blades at the back-right -->
+  <path fill="#000000" d="
+    M 415 296
+    L 500 274
+    L 500 316
+    L 445 344
+    Z"/>
+  <path fill="#000000" d="
+    M 415 336
+    L 500 322
+    L 500 362
+    L 445 380
+    Z"/>
+
+  <!-- Arm reaching forward from the shoulder, past the head -->
+  <path fill="#000000" d="
+    M 180 314
+    L 120 372
+    L 92 400
+    L 74 396
+    L 68 386
+    L 82 372
+    L 108 356
+    L 152 322
+    Z"/>
+</svg>
