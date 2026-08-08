@@ -340,6 +340,7 @@
     display: flex;
     flex-direction: column;
   }
+  .place-drawer[hidden] { display: none; }
   .drawer-header {
     display: flex;
     align-items: center;
@@ -473,7 +474,7 @@
     h1 { font-size: 1.15rem; }
     .subtitle { font-size: 0.85rem; }
     .layout { grid-template-columns: 1fr; }
-    #map { height: 46vh; min-height: 300px; position: static; }
+    #map { height: 46vh; min-height: 300px; position: relative; top: 0; }
     #filter-summary { margin-left: 0; width: 100%; }
     .place-drawer { width: 100vw; border-left: none; }
     .drawer-row dt { flex-basis: 7rem; }
