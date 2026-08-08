@@ -12,6 +12,7 @@ import { renderLanguageSwitcher, bindLanguageSwitcher } from './i18n/language-sw
 const DEFAULT_FILTERS = {
   city: 'all',
   petType: 'all',
+  language: 'all',
   ...Object.fromEntries(SERVICE_FILTERS.map(({ key }) => [key, false]))
 };
 

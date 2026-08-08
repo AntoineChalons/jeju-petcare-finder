@@ -29,12 +29,17 @@ export const translations = {
       doggyDayCare: 'Doggy day care',
       dogWalking: 'Dog walking',
       grooming: 'Grooming',
-      petTraining: 'Pet training'
+      petTraining: 'Pet training',
+      vet: 'Vet'
     },
     petTypes: {
       dogs: 'Dogs',
       cats: 'Cats',
       small_pets: 'Small pets'
+    },
+    languages: {
+      English: 'English',
+      Korean: 'Korean'
     },
     table: {
       name: 'Name',
@@ -51,9 +56,11 @@ export const translations = {
     filters: {
       city: 'City',
       petType: 'Pet type',
+      language: 'Spoken language',
       services: 'Services',
       allCities: 'All cities',
       allPetTypes: 'All pets',
+      allLanguages: 'All languages',
       reset: 'Reset filters',
       showingAll: 'Showing all {total} places',
       showingFiltered: 'Showing {filtered} of {total} places'
@@ -116,12 +123,17 @@ export const translations = {
       doggyDayCare: '狗狗日托',
       dogWalking: '遛狗服务',
       grooming: '宠物美容',
-      petTraining: '宠物训练'
+      petTraining: '宠物训练',
+      vet: '兽医'
     },
     petTypes: {
       dogs: '狗',
       cats: '猫',
       small_pets: '小型宠物'
+    },
+    languages: {
+      English: '英语',
+      Korean: '韩语'
     },
     table: {
       name: '名称',
@@ -138,9 +150,11 @@ export const translations = {
     filters: {
       city: '城市',
       petType: '宠物类型',
+      language: '使用语言',
       services: '服务',
       allCities: '所有城市',
       allPetTypes: '所有宠物',
+      allLanguages: '所有语言',
       reset: '重置筛选',
       showingAll: '显示全部 {total} 家店铺',
       showingFiltered: '显示 {filtered} / {total} 家店铺'
@@ -203,12 +217,17 @@ export const translations = {
       doggyDayCare: '犬の保育園',
       dogWalking: '散歩代行',
       grooming: 'トリミング',
-      petTraining: 'しつけ・訓練'
+      petTraining: 'しつけ・訓練',
+      vet: '動物病院'
     },
     petTypes: {
       dogs: '犬',
       cats: '猫',
       small_pets: '小動物'
+    },
+    languages: {
+      English: '英語',
+      Korean: '韓国語'
     },
     table: {
       name: '名前',
@@ -225,9 +244,11 @@ export const translations = {
     filters: {
       city: '都市',
       petType: 'ペットの種類',
+      language: '対応言語',
       services: 'サービス',
       allCities: 'すべての都市',
       allPetTypes: 'すべてのペット',
+      allLanguages: 'すべての言語',
       reset: 'フィルターをリセット',
       showingAll: '全 {total} 件を表示中',
       showingFiltered: '{total} 件中 {filtered} 件を表示中'
@@ -290,12 +311,17 @@ export const translations = {
       doggyDayCare: '강아지 유치원',
       dogWalking: '산책 대행',
       grooming: '미용',
-      petTraining: '훈련'
+      petTraining: '훈련',
+      vet: '동물병원'
     },
     petTypes: {
       dogs: '강아지',
       cats: '고양이',
       small_pets: '소동물'
+    },
+    languages: {
+      English: '영어',
+      Korean: '한국어'
     },
     table: {
       name: '이름',
@@ -312,9 +338,11 @@ export const translations = {
     filters: {
       city: '도시',
       petType: '반려동물 종류',
+      language: '사용 언어',
       services: '서비스',
       allCities: '모든 도시',
       allPetTypes: '모든 반려동물',
+      allLanguages: '모든 언어',
       reset: '필터 초기화',
       showingAll: '전체 {total}곳 표시 중',
       showingFiltered: '{total}곳 중 {filtered}곳 표시 중'

@@ -13,20 +13,39 @@ const markerRefs = {};
 const COLOR_DEFAULT_STROKE = '#ffffff';
 const COLOR_DEFAULT_FILL = '#7c6fc0';
 const COLOR_SELECTED = '#e8794a';
+// Vets get their own fill color (teal) plus a stethoscope glyph so they
+// read as a different kind of place from the round paw-service dots at a
+// glance, per GitHub issue #2 ("use a different icon (stethoscope)").
+const COLOR_VET_FILL = '#2f8f83';
 
-function markerEl(isSelected) {
+// Minimal inline stethoscope glyph. Kept tiny/monochrome (currentColor)
+// so it stays legible at marker scale and matches either state's fill.
+const STETHOSCOPE_SVG = `
+  <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2"
+       stroke-linecap="round" stroke-linejoin="round" width="60%" height="60%">
+    <path d="M4 4v5a4 4 0 0 0 8 0V4"></path>
+    <path d="M8 15a5 5 0 0 0 5 5 5 5 0 0 0 5-5v-2"></path>
+    <circle cx="18" cy="7" r="2"></circle>
+  </svg>
+`;
+
+function markerEl(isSelected, isVet) {
   const el = document.createElement('div');
-  const size = isSelected ? 22 : 14;
+  const size = isSelected ? 22 : (isVet ? 18 : 14);
   Object.assign(el.style, {
     width: size + 'px',
     height: size + 'px',
     borderRadius: '50%',
-    background: isSelected ? COLOR_SELECTED : COLOR_DEFAULT_FILL,
+    background: isSelected ? COLOR_SELECTED : (isVet ? COLOR_VET_FILL : COLOR_DEFAULT_FILL),
     border: '2px solid ' + COLOR_DEFAULT_STROKE,
     boxShadow: '0 1px 4px rgba(51,46,78,0.35)',
     cursor: 'pointer',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   });
+  if (isVet) el.innerHTML = STETHOSCOPE_SVG;
   return el;
 }
 
@@ -76,7 +95,8 @@ export function renderMap(list, selectedPlaceId, onMarkerClick) {
   for (const p of list) {
     if (p.gps_lat == null || p.gps_lng == null) continue;
     const isSelected = p.place_id === selectedPlaceId;
-    const el = markerEl(isSelected);
+    const isVet = p.vet === 1;
+    const el = markerEl(isSelected, isVet);
     const popup = new maplibregl.Popup({ offset: 14, maxWidth: '260px' }).setHTML(popupHtml(p));
     const marker = new maplibregl.Marker({ element: el })
       .setLngLat([p.gps_lng, p.gps_lat])

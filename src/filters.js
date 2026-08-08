@@ -13,7 +13,8 @@ export const SERVICE_FILTERS = [
   { key: 'doggyDayCare', column: 'doggy_day_care' },
   { key: 'dogWalking', column: 'dog_walking' },
   { key: 'grooming', column: 'grooming' },
-  { key: 'petTraining', column: 'pet_training' }
+  { key: 'petTraining', column: 'pet_training' },
+  { key: 'vet', column: 'vet' }
 ];
 
 /** Split a comma-joined "A, B, C" field into a trimmed array. */
@@ -48,7 +49,8 @@ function distinctFromList(places, field) {
 export function buildFilterOptions(places) {
   return {
     city: distinctScalar(places, 'city'),
-    petType: distinctFromList(places, 'pet_types')
+    petType: distinctFromList(places, 'pet_types'),
+    language: distinctFromList(places, 'languages_spoken')
   };
 }
 
@@ -60,6 +62,10 @@ export function applyFilters(places, filters) {
     }
     if (filters.petType !== 'all' &&
         !splitList(p.pet_types).includes(filters.petType)) {
+      return false;
+    }
+    if (filters.language !== 'all' &&
+        !splitList(p.languages_spoken).includes(filters.language)) {
       return false;
     }
     // Service checkboxes combine with AND: checking "boarding" and

@@ -17,6 +17,7 @@ function optionsHtml(values, allLabel, labelFor) {
 export function renderFilterLabels() {
   document.querySelector('label[for="filter-city"]').textContent = t('filters.city');
   document.querySelector('label[for="filter-pet-type"]').textContent = t('filters.petType');
+  document.querySelector('label[for="filter-language"]').textContent = t('filters.language');
   document.getElementById('filter-reset').textContent = t('filters.reset');
   // Service checkboxes: the label element wraps the input and a <span>,
   // so we set the span text and leave the checkbox alone.
@@ -32,12 +33,15 @@ export function renderFilterOptions(options) {
     optionsHtml(options.city, t('filters.allCities'));
   document.getElementById('filter-pet-type').innerHTML =
     optionsHtml(options.petType, t('filters.allPetTypes'), v => t('petTypes.' + v));
+  document.getElementById('filter-language').innerHTML =
+    optionsHtml(options.language, t('filters.allLanguages'), v => t('languages.' + v) || v);
 }
 
 /** Reflect the current filters onto the controls (used on state changes). */
 export function syncFilterControls(filters) {
   document.getElementById('filter-city').value = filters.city;
   document.getElementById('filter-pet-type').value = filters.petType;
+  document.getElementById('filter-language').value = filters.language;
   for (const { key } of SERVICE_FILTERS) {
     document.getElementById(`filter-${key}`).checked = filters[key];
   }
@@ -57,6 +61,7 @@ export function updateFilterSummary(filteredCount, totalCount) {
 function isDefaultFilterUi() {
   return document.getElementById('filter-city').value === 'all' &&
     document.getElementById('filter-pet-type').value === 'all' &&
+    document.getElementById('filter-language').value === 'all' &&
     SERVICE_FILTERS.every(({ key }) => !document.getElementById(`filter-${key}`).checked);
 }
 
@@ -70,6 +75,8 @@ export function bindFilterHandlers(onChange, onReset) {
     .addEventListener('change', e => onChange('city', e.target.value));
   document.getElementById('filter-pet-type')
     .addEventListener('change', e => onChange('petType', e.target.value));
+  document.getElementById('filter-language')
+    .addEventListener('change', e => onChange('language', e.target.value));
   for (const { key } of SERVICE_FILTERS) {
     document.getElementById(`filter-${key}`)
       .addEventListener('change', e => onChange(key, e.target.checked));

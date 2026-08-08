@@ -15,7 +15,8 @@ const DEFAULT_FILTERS = () => ({
   doggyDayCare: false,
   dogWalking: false,
   grooming: false,
-  petTraining: false
+  petTraining: false,
+  vet: false
 });
 
 function resetState() {

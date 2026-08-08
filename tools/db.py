@@ -21,8 +21,10 @@ CREATE TABLE places (
     -- kept in the database (so their ids and URLs stay stable and the
     -- research trail is preserved) but are not surfaced in the UI.
     active BOOLEAN NOT NULL DEFAULT 1,
-    -- The seven service categories the app filters on. Tri-state:
+    -- The eight service categories the app filters on. Tri-state:
     -- 1 = offers it, 0 = confirmed not offered, NULL = unknown.
+    -- "vet" (added for issue #2) marks veterinary clinics; the frontend
+    -- uses it to choose a distinct stethoscope map marker.
     boarding BOOLEAN,
     house_sitting BOOLEAN,
     drop_in_visit BOOLEAN,
@@ -30,6 +32,7 @@ CREATE TABLE places (
     dog_walking BOOLEAN,
     grooming BOOLEAN,
     pet_training BOOLEAN,
+    vet BOOLEAN,
     price_from_krw INTEGER,
     price_note TEXT,
     created_at TEXT DEFAULT (datetime('now')),
@@ -125,6 +128,7 @@ SELECT
     p.dog_walking,
     p.grooming,
     p.pet_training,
+    p.vet,
     p.price_from_krw,
     p.price_note,
     (SELECT GROUP_CONCAT(l.language_name, ', ') FROM place_languages pl JOIN languages l ON l.language_id=pl.language_id WHERE pl.place_id=p.place_id) AS languages_spoken,

@@ -6,6 +6,7 @@ const NO_SERVICE_FILTERS = Object.fromEntries(SERVICE_FILTERS.map(({ key }) => [
 const DEFAULTS = {
   city: 'all',
   petType: 'all',
+  language: 'all',
   ...NO_SERVICE_FILTERS
 };
 
@@ -15,6 +16,7 @@ const PLACES = [
     name: 'Happy Paws Grooming',
     city: 'Jeju City',
     pet_types: 'dogs, cats',
+    languages_spoken: 'Korean',
     boarding: 0, house_sitting: 0, drop_in_visit: 0, doggy_day_care: 0,
     dog_walking: 0, grooming: 1, pet_training: 0
   },
@@ -23,6 +25,7 @@ const PLACES = [
     name: 'Seogwipo Pet Hotel',
     city: 'Seogwipo',
     pet_types: 'dogs',
+    languages_spoken: 'Korean, English',
     boarding: 1, house_sitting: 0, drop_in_visit: 0, doggy_day_care: 1,
     dog_walking: 0, grooming: 1, pet_training: 0
   },
@@ -31,6 +34,7 @@ const PLACES = [
     name: 'Jeju Dog School',
     city: 'Jeju City',
     pet_types: 'dogs',
+    languages_spoken: 'Korean',
     boarding: null, house_sitting: null, drop_in_visit: null, doggy_day_care: null,
     dog_walking: null, grooming: null, pet_training: 1
   },
@@ -39,6 +43,7 @@ const PLACES = [
     name: 'Island Sitters',
     city: 'Aewol',
     pet_types: 'dogs, cats, small_pets',
+    languages_spoken: 'English',
     boarding: 0, house_sitting: 1, drop_in_visit: 1, doggy_day_care: 0,
     dog_walking: 1, grooming: 0, pet_training: 0
   }
@@ -80,6 +85,13 @@ describe('applyFilters', () => {
     expect(out.map(p => p.place_id)).toEqual([2]);
   });
 
+  it('filters by spoken language from the comma-joined list', () => {
+    const english = applyFilters(PLACES, { ...DEFAULTS, language: 'English' });
+    expect(english.map(p => p.place_id)).toEqual([2, 4]);
+    const korean = applyFilters(PLACES, { ...DEFAULTS, language: 'Korean' });
+    expect(korean.map(p => p.place_id)).toEqual([1, 2, 3]);
+  });
+
   it('combines service checkboxes with the selects', () => {
     const out = applyFilters(PLACES, {
       ...DEFAULTS, city: 'Aewol', petType: 'cats', dogWalking: true
@@ -107,6 +119,10 @@ describe('buildFilterOptions', () => {
     expect(buildFilterOptions(PLACES).petType).toEqual(['cats', 'dogs', 'small_pets']);
   });
 
+  it('collects sorted distinct languages from comma-joined lists', () => {
+    expect(buildFilterOptions(PLACES).language).toEqual(['English', 'Korean']);
+  });
+
   it('ignores null and empty values', () => {
     const places = [...PLACES, { place_id: 5, city: null, pet_types: '' }];
     const opts = buildFilterOptions(places);
@@ -116,10 +132,10 @@ describe('buildFilterOptions', () => {
 });
 
 describe('SERVICE_FILTERS', () => {
-  it('covers the seven services in display order', () => {
+  it('covers the eight services in display order', () => {
     expect(SERVICE_FILTERS.map(s => s.column)).toEqual([
       'boarding', 'house_sitting', 'drop_in_visit', 'doggy_day_care',
-      'dog_walking', 'grooming', 'pet_training'
+      'dog_walking', 'grooming', 'pet_training', 'vet'
     ]);
   });
 });

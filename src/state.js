@@ -14,6 +14,7 @@ const state = {
   filters: {
     city: 'all',       // 'all' | one city name
     petType: 'all',    // 'all' | 'dogs' | 'cats' | 'small_pets'
+    language: 'all',    // 'all' | one spoken-language name (e.g. 'English')
     // Service checkboxes. false = don't filter on this, true = keep only
     // places whose column is confirmed 1. Unknown (null) values are
     // excluded when a checkbox is on: we can't confirm the place offers it.
@@ -23,7 +24,8 @@ const state = {
     doggyDayCare: false,
     dogWalking: false,
     grooming: false,
-    petTraining: false
+    petTraining: false,
+    vet: false
   }
 };
 

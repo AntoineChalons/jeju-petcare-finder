@@ -25,8 +25,13 @@ convention. They live in a second file, data/reviews.csv, one row per
 review entry (see REVIEWS_CSV_COLUMNS below).
 """
 
-# The seven service categories the app filters on. Column order here is
-# also the display order in the UI filter bar.
+# The eight service categories the app filters on. Column order here is
+# also the display order in the UI filter bar. "vet" was added after the
+# original seven (see GitHub issue #2) to cover veterinary clinics; it
+# behaves exactly like the other seven for filtering/badges, but the
+# frontend also uses it to pick a distinct (stethoscope) map marker icon
+# since a vet visit is a meaningfully different kind of place than a
+# groomer/sitter/trainer.
 SERVICE_COLUMNS = [
     "boarding",
     "house_sitting",
@@ -35,6 +40,7 @@ SERVICE_COLUMNS = [
     "dog_walking",
     "grooming",
     "pet_training",
+    "vet",
 ]
 
 # Column order in the CSV, matching places table columns first, then the
