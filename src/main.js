@@ -129,7 +129,7 @@ async function init() {
   subscribe(render);
 
   try {
-    const places = await loadPlacesFromDb(`${import.meta.env.BASE_URL}pet_services.db`);
+    const places = await loadPlacesFromDb();
     document.getElementById('status').innerHTML = buildDbStatusReport(places);
     renderFilterOptions(buildFilterOptions(places));
     setState({ places });

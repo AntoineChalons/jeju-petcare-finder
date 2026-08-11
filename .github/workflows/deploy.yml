@@ -30,25 +30,14 @@ jobs:
           node-version: 24
           cache: npm
 
-      - name: Set up Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: '3.12'
-
       - name: Install Node dependencies
         run: npm ci
-
-      - name: Install Python dev dependencies
-        run: pip install pytest
 
       - name: Lint
         run: npm run lint
 
       - name: Unit tests (JS)
         run: npm test
-
-      - name: Unit tests (Python)
-        run: python -m pytest tools/
 
       - name: Build
         run: npm run build

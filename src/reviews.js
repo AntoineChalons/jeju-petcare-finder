@@ -1,7 +1,7 @@
 /**
  * Pure review logic for the place drawer.
  *
- * The database stores two kinds of reviews (see tools/db.py):
+ * The database stores two kinds of reviews:
  * - `place_feedback` — at most one row per (place, platform source): rating,
  *   review count, url, optional authored summary, `last_checked` date.
  * - `owner_quotes` — free-form quotes from local pet owners, several per

@@ -2,6 +2,9 @@ import initSqlJs from 'sql.js';
 import sqlWasmUrl from 'sql.js/dist/sql-wasm.wasm?url';
 import { groupReviews } from './reviews.js';
 
+const DEFAULT_DATABASE_URL =
+  'https://antoinechalons.github.io/public-data/pet_services.db';
+
 function rows(db, sql) {
   const res = db.exec(sql);
   if (!res.length) return [];
@@ -13,11 +16,18 @@ function rows(db, sql) {
   });
 }
 
-export async function loadPlacesFromDb(dbPath = 'pet_services.db') {
+export function getDatabaseUrl() {
+  return import.meta.env.VITE_DATABASE_URL || DEFAULT_DATABASE_URL;
+}
+
+export async function loadPlacesFromDb(dbPath = getDatabaseUrl()) {
   const SQL = await initSqlJs({
     locateFile: () => sqlWasmUrl
   });
-  const resp = await fetch(dbPath);
+  const resp = await fetch(dbPath, { cache: 'no-store' });
+  if (!resp.ok) {
+    throw new Error(`Cannot load database: HTTP ${resp.status}`);
+  }
   const buf = await resp.arrayBuffer();
   const db = new SQL.Database(new Uint8Array(buf));
   // Places believed to be out of business are kept in the database (so their

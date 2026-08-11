@@ -1,8 +1,4 @@
-# PR gate. The existing `deploy.yml` runs the same checks on `push: main`
-# so the deployed artifact is guaranteed clean, but nothing was blocking
-# a PR before it merged. This workflow adds that gate: any PR against
-# main runs lint + JS tests + Python tests + build, and merging is
-# blocked until they pass.
+# PR gate for the web application.
 name: CI
 
 on:
@@ -22,25 +18,14 @@ jobs:
           node-version: 24
           cache: npm
 
-      - name: Set up Python
-        uses: actions/setup-python@v7
-        with:
-          python-version: '3.12'
-
       - name: Install Node dependencies
         run: npm ci
-
-      - name: Install Python dev dependencies
-        run: pip install pytest
 
       - name: Lint
         run: npm run lint
 
       - name: Unit tests (JS)
         run: npm test
-
-      - name: Unit tests (Python)
-        run: python -m pytest tools/
 
       - name: Build
         run: npm run build

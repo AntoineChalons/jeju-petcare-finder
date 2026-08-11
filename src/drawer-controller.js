@@ -30,7 +30,7 @@ const CONTACT_META = {
 
 /**
  * Display names for review platforms. Sources are a controlled vocabulary
- * (tools/schema.py SOURCE_KINDS), so an unknown name here means the schema
+ * (the data pipeline SOURCE_KINDS), so an unknown name here means the schema
  * gained a source the UI doesn't know yet — fall back to the raw name
  * rather than hiding the row.
  */
@@ -78,7 +78,7 @@ function linkValue(url, labelKey) {
 
 /**
  * `contact_methods` arrives from v_place_dashboard packed with the same
- * delimiters the CSV uses (see tools/schema.py): ";" between entries and
+ * delimiters the source CSV uses: ";" between entries and
  * ":" between type and value. The value itself can contain ":" (a kakaotalk
  * chat URL, for instance), so only the first ":" is a separator.
  */
