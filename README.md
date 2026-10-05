@@ -73,6 +73,11 @@ VITE_DATABASE_URL=http://localhost:8000/pet_services.db npm run dev
 
 GitHub Actions builds and deploys the app to GitHub Pages after each push to `main`.
 
+In **Settings > Pages > Build and deployment**, set **Source** to **GitHub Actions**.
+The deployment workflow builds the Vite app and publishes `dist`. Do not select
+**Deploy from a branch** or `/docs`: this repository has no Jekyll site or `docs`
+directory.
+
 ## Contributing
 
 Spotted an error or a missing place? [Open an issue](https://github.com/AntoineChalons/jeju-petcare-finder/issues/new).
