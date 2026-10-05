@@ -1,5 +1,6 @@
-import maplibregl from 'maplibre-gl';
+import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
+import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { displayName } from './place-name.js';
 
 // MapLibre GL JS + OpenFreeMap positron style — same map as the sibling
@@ -51,6 +52,8 @@ function markerEl(isSelected, isVet) {
 }
 
 export function initMap() {
+  // Bundle the worker and its shared imports for static deployment.
+  maplibregl.setWorkerUrl(workerUrl);
   map = new maplibregl.Map({
     container: 'map',
     style: 'https://tiles.openfreemap.org/styles/positron',
